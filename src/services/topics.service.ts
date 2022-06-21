@@ -103,7 +103,11 @@ export const createFullTopic = async (
     `New Topic created by @${user.key}: ${createdTopic.name} (_id: ${createdTopic._id}), ${
       env.OTHER.FRONTEND_BASE_URL
     }/topics/${createdTopic.key} ${parentTopicName ? 'as subtopic of ' + parentTopicName : ''}. 
-     - description: ${createdTopic.description} (sourceUrl: ${createdTopic.descriptionSourceUrl})
+     - description: ${
+       !!createdTopic.description?.length && createdTopic.description.length > 200
+         ? createdTopic.description.slice(0, 200) + '[...]'
+         : createdTopic.description
+     } (sourceUrl: ${createdTopic.descriptionSourceUrl})
      - level: ${createdTopic.level ? createdTopic.level + '/100' : 'not applicable'}
      - topic types: ${creationData.topicTypes.join(', ')}
      - ${creationData.prerequisitesTopicsIds.length} prerequisites`
