@@ -18,4 +18,5 @@ export interface User {
   role: UserRole;
   active: boolean; //email verified
   subscribedToNewsletterAt?: number;
+  createdAt: number;
 }

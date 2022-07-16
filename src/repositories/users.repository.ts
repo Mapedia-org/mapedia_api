@@ -45,7 +45,7 @@ class NonUniqueUserEmail extends Error {
   }
 }
 
-export const createUser = async (data: Omit<User, '_id'>): Promise<User> => {
+export const createUser = async (data: Omit<User, '_id' | 'createdAt'>): Promise<User> => {
   const existingUser = await findUser({ email: data.email });
 
   if (!!existingUser) {
@@ -54,6 +54,7 @@ export const createUser = async (data: Omit<User, '_id'>): Promise<User> => {
   const userToCreate: User = {
     ...data,
     _id: shortid.generate(),
+    createdAt: Date.now(),
   };
   const session = neo4jDriver.session();
 
